@@ -1,0 +1,30 @@
+<template>
+    <el-menu :style="{ width: '230px' }" active-text-color="#ffd04b" background-color="#545c64" class="aside-container"
+        default-active="2" text-color="#fff" @open="handleOpen" @close="handleClose">
+        <p class="logo-lg">DIDI陪诊</p>
+        <TreeMenu :menuData :index="1" />
+    </el-menu>
+</template>
+
+<script setup>
+import TreeMenu from './TreeMenu.vue';
+import { useRouter } from 'vue-router';
+import { ref, reactive } from 'vue'
+
+const router = useRouter()
+const menuData = reactive(router.options.routes[0].children)
+
+</script>
+<style lang='less' scoped>
+.aside-container {
+    height: 100%;
+
+    .logo-lg {
+        font-size: 20px;
+        text-align: center;
+        height: 50px;
+        line-height: 50px;
+        color: #fff;
+    }
+}
+</style>
