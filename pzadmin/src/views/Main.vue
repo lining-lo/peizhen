@@ -4,7 +4,7 @@
             <!-- 侧边菜单 -->
             <Aside />
             <el-container>
-                <el-header>Header</el-header>
+                <el-header><NavHeader /></el-header>
                 <el-main>
                     <RouterView />
                 </el-main>
@@ -15,6 +15,7 @@
 
 <script setup>
 import Aside from '../components/Aside.vue'
+import NavHeader from '../components/NavHeader.vue';
 import { RouterView } from 'vue-router';
 import { ref, reactive } from 'vue'
 
