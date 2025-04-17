@@ -1,8 +1,8 @@
 <template>
     <div class="header-container">
         <div class="header-left">
-            <el-icon class="icons" size="20">
-                <Fold />
+            <el-icon class="icons" size="20" @click="store.commit('collapseMenu')">
+                <component :is="isCollapse?'Expand':'Fold'"></component>
             </el-icon>
         </div>
         <div class="header-right">
@@ -22,7 +22,14 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { useStore } from 'vuex'
+import { ref, reactive, computed } from 'vue'
+
+//获取vuex仓库
+const store = useStore()
+
+const isCollapse = computed(() => store.state.menu.isCollapse)
+
 
 </script>
 
