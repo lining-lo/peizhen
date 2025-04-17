@@ -23,15 +23,20 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 //父传子的数据
 const props = defineProps(['menuData', 'index'])
-
 //创建router实例
 const router = useRouter()
+//创建store实例
+const store = useStore()
 
 //菜单点击事件
 const handleClick = (item, index) => {
+    //添加tag
+    store.commit('addMenu',item.meta)
+    //跳转
     router.push(item.meta.path)
 }
 
