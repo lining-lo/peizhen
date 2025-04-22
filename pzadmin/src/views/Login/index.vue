@@ -24,7 +24,7 @@
         </el-form-item>
         <el-form-item>
           <el-button style="width: 100%;" type="primary" @click="submitForm()">
-            {{fromType?'登录':'注册'}}
+            {{ fromType ? '登录' : '注册' }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -33,6 +33,7 @@
 </template>
 
 <script setup>
+import { getCode } from '../../api'
 import { Avatar, Lock } from "@element-plus/icons-vue";
 import { ref, reactive } from 'vue'
 
@@ -87,8 +88,15 @@ const countdownChange = () => {
       countDown.validText = `剩余${countDown.time}s`
     }
   }, 1000);
-
   flag = false
+  getCode().then(({data}) => {
+    if (data.code === 10000) {
+      ElMessage({
+        message: '发送成功',
+        type: 'success',
+      })
+    } 
+  })
 }
 
 //账号校验规则
@@ -118,7 +126,7 @@ const rules = reactive({
 })
 
 //提交表单
-const submitForm = ()=>{
+const submitForm = () => {
 
 }
 </script>
