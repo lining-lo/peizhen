@@ -6,7 +6,7 @@
           <img :src="imgUrl" alt="">
         </div>
       </template>
-      <div class="jump-link" @click="handleChange"><el-link type="primary">{{ fromType ? '注册用户' : '返回登录' }}</el-link>
+      <div class="jump-link" @click="handleChange"><el-link type="primary">{{ fromType ? '返回登录' : '注册用户' }}</el-link>
       </div>
       <el-form :rules="rules" :model="loginForm">
         <el-form-item prop="userName">
@@ -24,7 +24,7 @@
         </el-form-item>
         <el-form-item>
           <el-button style="width: 100%;" type="primary" @click="submitForm()">
-            {{ fromType ? '登录' : '注册' }}
+            {{ fromType ? '注册' : '登录' }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -40,8 +40,8 @@ import { ref, reactive } from 'vue'
 //图片的路径
 const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
 
-//表单的类型 0返回登录 1注册用户
-const fromType = ref(1)
+//表单的类型 0登录 1注册
+const fromType = ref(0)
 
 //登录表单
 const loginForm = reactive({
@@ -78,10 +78,11 @@ const countdownChange = () => {
     return
   }
   //定时器
-  setInterval(() => {
+  const timer = setInterval(() => {
     if (countDown.time <= 0) {
       countDown.time = 60
       countDown.validText = '获取验证码'
+      clearInterval(timer)
     } else {
       flag = true
       countDown.time--
