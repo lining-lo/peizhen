@@ -8,7 +8,7 @@
       </template>
       <div class="jump-link" @click="handleChange"><el-link type="primary">{{ fromType ? '返回登录' : '注册用户' }}</el-link>
       </div>
-      <el-form :rules="rules" :model="loginForm">
+      <el-form ref="loginFormRef" :rules="rules" :model="loginForm">
         <el-form-item prop="userName">
           <el-input :prefix-icon="Avatar" v-model="loginForm.userName" placeholder="手机号" />
         </el-form-item>
@@ -23,7 +23,7 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button style="width: 100%;" type="primary" @click="submitForm()">
+          <el-button style="width: 100%;" type="primary" @click="submitForm(loginFormRef)">
             {{ fromType ? '注册' : '登录' }}
           </el-button>
         </el-form-item>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { getCode } from '../../api'
+import { getCode, login, userAuthentication } from '../../api'
 import { Avatar, Lock } from "@element-plus/icons-vue";
 import { ref, reactive } from 'vue'
 
@@ -90,13 +90,14 @@ const countdownChange = () => {
     }
   }, 1000);
   flag = false
-  getCode().then(({data}) => {
+  //发送验证码
+  getCode({tel:loginForm.userName}).then(({ data }) => {
     if (data.code === 10000) {
       ElMessage({
         message: '发送成功',
         type: 'success',
       })
-    } 
+    }
   })
 }
 
@@ -113,7 +114,7 @@ const validateUser = (rule, value, callback) => {
 //账号校验规则
 const validatePass = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('账号不能为空'))
+    callback(new Error('密码不能为空'))
   } else {
     // 密码正则
     const passWordReg = /^[a-zA-Z0-9_-]{4,16}$/
@@ -126,9 +127,45 @@ const rules = reactive({
   passWord: [{ validator: validatePass, required: true, trigger: 'blur' }],
 })
 
+//表单dom
+const loginFormRef = ref()
 //提交表单
-const submitForm = () => {
+const submitForm = (formEl) => {
 
+  if (!formEl) return
+  //表单校验
+  formEl.validate((valid) => {
+    if (valid) {
+      //用户注册
+      if (fromType.value) {
+        userAuthentication(loginForm).then(({ data }) => {
+          if (data.code === 10000) {
+            //跳转到登录表单
+            fromType.value = 0
+            //提示用户
+            ElMessage({
+              message: '注册成功',
+              type: 'success',
+            })
+          }
+        })
+      } else {
+        //用户登录
+        login(loginForm).then(({ data }) => {
+          if (data.code === 10000) {
+            //存入token、用户信息
+            localStorage.setItem('pz_token',data.data.token)
+            localStorage.setItem('pz_userInfo',JSON.stringify(data.data.userInfo))
+            //提示用户
+            ElMessage({
+              message: '登录成功',
+              type: 'success',
+            })
+          }
+        })
+      }
+    }
+  })
 }
 </script>
 
