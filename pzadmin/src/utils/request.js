@@ -28,6 +28,13 @@ axios.interceptors.response.use(function (response) {
     if (response.data.code === -1) {
         ElMessage.warning(response.data.message)
     }
+    if (response.data.code === -2) {
+      //token过期清除token和用户信息
+      localStorage.removeItem('pz_token')
+      localStorage.removeItem('pz_userInfo')
+      //跳转
+      window.location.href = window.location.origin
+    }
     return response;
   }, function (error) {
     // 对响应错误做点什么

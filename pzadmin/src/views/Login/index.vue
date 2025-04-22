@@ -35,10 +35,14 @@
 <script setup>
 import { getCode, login, userAuthentication } from '../../api'
 import { Avatar, Lock } from "@element-plus/icons-vue";
+import { useRouter } from 'vue-router';
 import { ref, reactive } from 'vue'
 
 //图片的路径
 const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
+
+//路由实例
+const router = useRouter()
 
 //表单的类型 0登录 1注册
 const fromType = ref(0)
@@ -156,6 +160,8 @@ const submitForm = (formEl) => {
             //存入token、用户信息
             localStorage.setItem('pz_token',data.data.token)
             localStorage.setItem('pz_userInfo',JSON.stringify(data.data.userInfo))
+            //跳转到首页
+            router.push('/')
             //提示用户
             ElMessage({
               message: '登录成功',
