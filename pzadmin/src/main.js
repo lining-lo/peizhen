@@ -1,5 +1,6 @@
-import { createApp, nextTick } from 'vue'
+import { createApp } from 'vue'
 import './style.css'
+import PanelHead from './components/PanelHead.vue'
 import App from './App.vue'
 import store from './store'
 import router from './router'
@@ -10,6 +11,9 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+
+//注册全局组件
+app.component('PanelHead',PanelHead)
 
 //前置路由守卫
 router.beforeEach((to, from)=>{

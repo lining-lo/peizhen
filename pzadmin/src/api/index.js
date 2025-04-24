@@ -14,3 +14,18 @@ export const login = (data) => {
 export const userAuthentication = (data) => {
     return http.post('/user/authentication', data)
 }
+
+//菜单权限数据
+export const userGetmenu = () => {
+    return http.get('/user/getmenu')
+}
+
+//权限修改
+export const userSetMenu = (data) => {
+    return http.post('/user/setmenu', data)
+}
+
+//权限列表
+export const menuList = (params) => {
+    return http.get('/menu/list', { params })
+}

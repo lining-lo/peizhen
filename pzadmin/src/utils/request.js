@@ -5,12 +5,13 @@ import { ElMessage } from "element-plus";
 const http = axios.create({
     baseURL: 'https://v3pz.itndedu.com/v3pz',
     timeout: 5000,
+    // headers:{'x-token':localStorage.getItem('pz_token')}
 });
 
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+http.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    const token = localStorage.getItem('pz-token')
+    const token = localStorage.getItem('pz_token')
     //不需要添加token的api
     const writeUrl = ['/get/code','/user/authentication','/login']
     if (token && !writeUrl.includes(config.url)) {
@@ -23,7 +24,7 @@ axios.interceptors.request.use(function (config) {
   });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
+http.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     if (response.data.code === -1) {
         ElMessage.warning(response.data.message)
