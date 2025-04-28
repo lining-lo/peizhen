@@ -44,3 +44,8 @@ export const menuSelectList = () => {
 export const updateUser = (data) => {
     return http.post('/update/user', data)
 }
+
+//用户菜单权限
+export const menuPermissions = (data) => {
+    return http.get('/menu/permissions', data)
+}

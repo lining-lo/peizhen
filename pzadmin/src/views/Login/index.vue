@@ -33,16 +33,20 @@
 </template>
 
 <script setup>
-import { getCode, login, userAuthentication } from '../../api'
+import { getCode, login, userAuthentication, menuPermissions } from '../../api'
 import { Avatar, Lock } from "@element-plus/icons-vue";
 import { useRouter } from 'vue-router';
-import { ref, reactive } from 'vue'
+import { useStore } from 'vuex';
+import { ref, reactive, computed, toRaw } from 'vue'
 
 //图片的路径
 const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
 
 //路由实例
 const router = useRouter()
+
+//vuex实例
+const store = useStore()
 
 //表单的类型 0登录 1注册
 const fromType = ref(0)
@@ -95,7 +99,7 @@ const countdownChange = () => {
   }, 1000);
   flag = false
   //发送验证码
-  getCode({tel:loginForm.userName}).then(({ data }) => {
+  getCode({ tel: loginForm.userName }).then(({ data }) => {
     if (data.code === 10000) {
       ElMessage({
         message: '发送成功',
@@ -133,9 +137,12 @@ const rules = reactive({
 
 //表单dom
 const loginFormRef = ref()
+
+//获取动态菜单数据
+const routerList = computed(() => store.state.menu.routerList)
+
 //提交表单
 const submitForm = (formEl) => {
-
   if (!formEl) return
   //表单校验
   formEl.validate((valid) => {
@@ -158,8 +165,15 @@ const submitForm = (formEl) => {
         login(loginForm).then(({ data }) => {
           if (data.code === 10000) {
             //存入token、用户信息
-            localStorage.setItem('pz_token',data.data.token)
-            localStorage.setItem('pz_userInfo',JSON.stringify(data.data.userInfo))
+            localStorage.setItem('pz_token', data.data.token)
+            localStorage.setItem('pz_userInfo', JSON.stringify(data.data.userInfo))
+            //获取菜单权限
+            menuPermissions().then(({ data }) => {
+              store.commit('dynamicMenu', data.data)
+              toRaw(routerList.value).forEach(item => {
+                router.addRoute('main',item)
+              });
+            })
             //跳转到首页
             router.push('/')
             //提示用户

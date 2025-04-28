@@ -18,14 +18,14 @@
             </ul>
         </div>
         <div class="header-right">
-            <el-dropdown>
+            <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link flex-box">
                     <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
                     <p class="user-name">Admin</p>
                 </span>
                 <template #dropdown>
-                    <el-dropdown-menu>
-                        <el-dropdown-item>退出</el-dropdown-item>
+                    <el-dropdown-menu >
+                        <el-dropdown-item command="logout">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -40,14 +40,19 @@ import { ref, reactive, computed } from 'vue'
 
 //获取vuex仓库
 const store = useStore()
+
 //获取route实例
 const route = useRoute()
+
 //获取router实例
 const router = useRouter()
+
 //菜单的状态
 const isCollapse = computed(() => store.state.menu.isCollapse)
+
 //tag数组
 const selectMenu = store.state.menu.selectMenu
+
 //点击关闭tag的方法
 const closeTag = (item, index) => {
     store.commit('closeMenu', item)
@@ -69,6 +74,20 @@ const closeTag = (item, index) => {
         router.push(selectMenu[index].path)
     }
 }
+
+//退出登录
+const handleCommand = (command) => {
+  if (command === 'logout') {
+   //清除浏览器的token及用户信息
+   localStorage.removeItem('pz_token')
+   localStorage.removeItem('pz_userInfo')
+   //跳转到登录页面
+   window.location.href = window.location.origin
+   //提示用户
+   ElMessage.success('退出成功')
+  }
+}
+
 </script>
 
 <style lang='less' scoped>

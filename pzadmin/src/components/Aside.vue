@@ -15,10 +15,14 @@ import { ref, reactive, computed } from 'vue'
 
 //获取路由
 const router = useRouter()
+
 //获取vuex仓库
 const store = useStore()
 
-const menuData = reactive(router.options.routes[0].children)
+//动态菜单数据
+const menuData = computed(() => store.state.menu.routerList)
+
+//菜单展开与折叠
 const isCollapse = computed(() => store.state.menu.isCollapse)
 
 </script>
