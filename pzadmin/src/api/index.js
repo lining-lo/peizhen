@@ -29,3 +29,18 @@ export const userSetMenu = (data) => {
 export const menuList = (params) => {
     return http.get('/menu/list', { params })
 }
+
+//账号管理列表
+export const authAdmin = (params) => {
+    return http.get('/auth/admin', { params })
+}
+
+//菜单权限下拉
+export const menuSelectList = () => {
+    return http.get('/menu/selectlist')
+}
+
+//用户信息修改
+export const updateUser = (data) => {
+    return http.post('/update/user', data)
+}
