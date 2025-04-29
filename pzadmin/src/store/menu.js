@@ -2,10 +2,15 @@ const localData = localStorage.getItem('pz_v3pz')
 const state = localData ? localData.menu : {
     //控制菜单展开与折叠状态
     isCollapse: false,
+
     //tag标签数组
     selectMenu: [],
+
     //动态菜单
-    routerList: []
+    routerList: [],
+
+    //菜单高亮
+    menuActive:'1-1'
 }
 
 const mutations = {
@@ -48,6 +53,11 @@ const mutations = {
         routerSet(payload)
         //拿到拼接后的数据
         state.routerList = payload
+    },
+
+    //更新菜单高亮的方法
+    updateMenuActive(state,payload){
+        state.menuActive = payload
     }
 
 }

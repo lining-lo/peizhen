@@ -20,11 +20,11 @@
         <div class="header-right">
             <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link flex-box">
-                    <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-                    <p class="user-name">Admin</p>
+                    <el-avatar :src=userInfo.avatar />
+                    <p class="user-name">{{ userInfo.name }}</p>
                 </span>
                 <template #dropdown>
-                    <el-dropdown-menu >
+                    <el-dropdown-menu>
                         <el-dropdown-item command="logout">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
@@ -46,6 +46,9 @@ const route = useRoute()
 
 //获取router实例
 const router = useRouter()
+
+//获取头像信息
+const userInfo = JSON.parse(localStorage.getItem('pz_userInfo'))
 
 //菜单的状态
 const isCollapse = computed(() => store.state.menu.isCollapse)
@@ -77,16 +80,16 @@ const closeTag = (item, index) => {
 
 //退出登录
 const handleCommand = (command) => {
-  if (command === 'logout') {
-   //清除浏览器的token及用户信息
-   localStorage.removeItem('pz_token')
-   localStorage.removeItem('pz_userInfo')
-   localStorage.removeItem('pz_v3pz')
-   //跳转到登录页面
-   window.location.href = window.location.origin
-   //提示用户
-   ElMessage.success('退出成功')
-  }
+    if (command === 'logout') {
+        //清除浏览器的token及用户信息
+        localStorage.removeItem('pz_token')
+        localStorage.removeItem('pz_userInfo')
+        localStorage.removeItem('pz_v3pz')
+        //跳转到登录页面
+        window.location.href = window.location.origin
+        //提示用户
+        ElMessage.success('退出成功')
+    }
 }
 
 </script>

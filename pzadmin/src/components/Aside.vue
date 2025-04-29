@@ -1,6 +1,6 @@
 <template>
     <el-menu :collapse="isCollapse" :style="{ width: isCollapse ? '64px' : '230px' }" active-text-color="#ffd04b"
-        background-color="#545c64" class="aside-container" default-active="2" text-color="#fff" @open="handleOpen"
+        background-color="#545c64" class="aside-container" :default-active="active" text-color="#fff" @open="handleOpen"
         @close="handleClose">
         <p class="logo-lg">{{ isCollapse?'DIDI':'DIDI陪诊' }}</p>
         <TreeMenu :menuData :index="1" />
@@ -24,6 +24,9 @@ const menuData = computed(() => store.state.menu.routerList)
 
 //菜单展开与折叠
 const isCollapse = computed(() => store.state.menu.isCollapse)
+
+//选中菜单高亮
+const active = computed(()=> store.state.menu.menuActive)
 
 </script>
 <style lang='less' scoped>

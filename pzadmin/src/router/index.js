@@ -2,17 +2,32 @@ import { createWebHashHistory, createRouter } from 'vue-router'
 
 import Layout from '../views/Main.vue'
 import Login from '../views/Login/index.vue'
-import Dashboard from '../views/Dashboard/index.vue'
-import Admin from '../views/Auth/Admin/index.vue'
-import Group from '../views/Auth/Group/index.vue'
-import Staff from '../views/Vppz/Staff/index.vue'
-import Order from '../views/Vppz/Order/index.vue'
+// import Dashboard from '../views/Dashboard/index.vue'
+// import Admin from '../views/Auth/Admin/index.vue'
+// import Group from '../views/Auth/Group/index.vue'
+// import Staff from '../views/Vppz/Staff/index.vue'
+// import Order from '../views/Vppz/Order/index.vue'
+const localData = localStorage.getItem('pz_v3pz')
 
 const routes = [
     {
         path: '/',
         component: Layout,
         name: 'main',
+        redirect: to => {
+            if (localData) {
+                const child = JSON.parse(localData).menu.routerList[0].children
+                //第一项有子项
+                if (child) {
+                    return child[0].meta.path
+                }else{
+                    //第一项没子项
+                    return JSON.parse(localData).menu.routerList[0].meta.path
+                }
+            }else{
+                return '/'
+            }
+        },
         children: [
             // {
             //     path: 'dashboard',
