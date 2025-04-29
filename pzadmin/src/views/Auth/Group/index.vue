@@ -1,5 +1,5 @@
 <template>
-    <panel-head />
+    <panel-head :route="route"/>
     <!-- 添加按钮 -->
     <el-button :icon="Plus" type="primary" @click="open(null)">添加</el-button>
     <!-- dialog对话框 -->
@@ -43,6 +43,10 @@
 import { Edit, Plus } from "@element-plus/icons-vue";
 import { userGetmenu, userSetMenu, menuList } from '../../../api'
 import { ref, reactive, onMounted, nextTick } from 'vue'
+import { useRoute } from "vue-router";
+
+//获取route实例
+const route = useRoute()
 
 //控制对话框显示与隐藏
 const dialogVisible = ref(false)

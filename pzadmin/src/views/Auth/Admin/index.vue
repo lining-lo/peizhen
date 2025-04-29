@@ -1,5 +1,5 @@
 <template>
-    <panel-head />
+    <panel-head :route="route"/>
     <!-- 用户列表 -->
     <el-table :data="listData.list" style="width: 100%">
         <el-table-column prop="id" label="id" />
@@ -57,6 +57,10 @@
 import dayjs from 'dayjs';
 import { authAdmin, menuSelectList, updateUser } from '../../../api';
 import { ref, reactive, onMounted } from 'vue'
+import { useRoute } from "vue-router";
+
+//获取route实例
+const route = useRoute()
 
 //form表的dom
 const formRef = ref()

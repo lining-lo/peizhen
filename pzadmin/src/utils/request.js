@@ -33,6 +33,7 @@ http.interceptors.response.use(function (response) {
       //token过期清除token和用户信息
       localStorage.removeItem('pz_token')
       localStorage.removeItem('pz_userInfo')
+      localStorage.removeItem('pz_v3pz')
       //跳转
       window.location.href = window.location.origin
     }

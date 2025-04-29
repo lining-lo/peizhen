@@ -81,6 +81,7 @@ const handleCommand = (command) => {
    //清除浏览器的token及用户信息
    localStorage.removeItem('pz_token')
    localStorage.removeItem('pz_userInfo')
+   localStorage.removeItem('pz_v3pz')
    //跳转到登录页面
    window.location.href = window.location.origin
    //提示用户

@@ -1,4 +1,5 @@
-const state = {
+const localData = localStorage.getItem('pz_v3pz')
+const state = localData ? localData.menu : {
     //控制菜单展开与折叠状态
     isCollapse: false,
     //tag标签数组
@@ -38,7 +39,7 @@ const mutations = {
                 if (!route.children) {
                     const url = `../views${route.meta.path}/index.vue`
                     route.component = modules[url]
-                }else{
+                } else {
                     routerSet(route.children)
                 }
             });
