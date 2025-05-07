@@ -1,17 +1,36 @@
 <template>
-    <div>
-        我是Main
-        <van-button type="primary">主要按钮</van-button>
-        <van-button type="success">成功按钮</van-button>
-        <van-button type="default">默认按钮</van-button>
-        <van-button type="danger">危险按钮</van-button>
-        <van-button type="warning">警告按钮</van-button>
-        <router-view></router-view>
-    </div>
+    <RouterView />
+    <van-tabbar v-model="active">
+        <van-tabbar-item v-for="item in router.options.routes[0].children" :index="item.path" :url="`/#/${item.path}`"
+            :icon="item.meta.icon">{{ item.meta.name }}</van-tabbar-item>
+    </van-tabbar>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { RouterView } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+
+//router实例
+const router = useRouter()
+
+//route实例
+const route = useRoute()
+
+//tabbar标签的索引值
+const active = ref(0);
+
+//挂载
+onMounted(() => {
+    //所有tabbar标签路由
+    const routes = router.options.routes[0].children
+    //动态获取tabbar标签的索引值
+    active.value = routes.findIndex(item => '/' + item.path === route.path)
+})
+
+
+
+
 
 </script>
 <style lang='less' scoped></style>

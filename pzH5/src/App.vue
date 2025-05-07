@@ -1,13 +1,9 @@
 <template>
-  <div>
-    <router-view></router-view>
-  </div>
+  <RouterView />
 </template>
 
 <script setup>
-import { ref, reactive} from 'vue'
+import { ref, reactive } from 'vue'
 
 </script>
-<style lang='less' scoped>
-
-</style>
+<style lang='less' scoped></style>
