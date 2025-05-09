@@ -1,6 +1,6 @@
 <template>
     <div>
-        我是order
+        我是Order
     </div>
 </template>
 

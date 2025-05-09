@@ -20,7 +20,8 @@
         </van-col>
     </van-row>
     <!-- 医院列表 -->
-    <van-row justify="space-around" class="yy-list" v-for="item in homeData.hospitals" :key="item.id">
+    <van-row justify="space-around" @click="goOrder(item)" class="yy-list" v-for="item in homeData.hospitals"
+        :key="item.id">
         <van-col span="6">
             <van-image radius="5" width="100" height="90" :src="item.avatar_url" />
         </van-col>
@@ -36,6 +37,10 @@
 
 <script setup>
 import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+//router实例
+const router = useRouter()
 
 //搜索内容
 const searchValue = ref('')
@@ -57,13 +62,18 @@ onMounted(async () => {
     //获取首页数据
     const { data } = await proxy.$api.index()
     Object.assign(homeData, data.data)
-    console.log(homeData);
+    console.log('homeData', homeData);
 
 })
 
-//点击快捷卡片跳转
+//点击快捷卡片跳转到订单详情
 const goOrderTwo = (index) => {
-    
+    router.push('/createOrder?id=' + homeData.hospitals[index].id)
+}
+
+//点击医院跳转到订单详情
+const goOrder = (hospital) => {
+    router.push('/createOrder?id=' + hospital.id)
 }
 
 </script>
