@@ -24,5 +24,10 @@ export default {
     //订单列表
     orderList(params) {
         return http.get('/order/list', { params })
+    },
+
+    //订单详情
+    orderDetail(params) {
+        return http.get('/order/detail', { params })
     }
 }

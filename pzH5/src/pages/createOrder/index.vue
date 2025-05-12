@@ -217,7 +217,7 @@ const submit = async () => {
 //关闭二维码弹窗
 const closeCode = ()=>{
     //关闭弹窗
-    showCode.vue = false
+    showCode.value = false
     //跳转到订单页
     router.push('/order')
 }

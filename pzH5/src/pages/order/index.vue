@@ -10,7 +10,7 @@
             <van-tab title="已取消" name="4" />
         </van-tabs>
         <!-- 订单列表 -->
-        <van-row v-for="item in order" :key="item.out_trade_no" @click="goDetail">
+        <van-row v-for="item in order" :key="item.out_trade_no" @click="goDetail(item)">
             <!-- 图片 -->
             <van-col span="5">
                 <van-image radius="5" width="50" height="50" :src="item.serviceImg" />
@@ -34,8 +34,12 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 import counter from '../../components/counter.vue'
 import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
+
+//获取路由
+const router = useRouter()
 
 //获取当前vue实例
 const { proxy } = getCurrentInstance()
@@ -67,7 +71,7 @@ const onClickTab = (item) => {
 const getOrderList = async (state) => {
     const { data } = await proxy.$api.orderList({ state })
     data.data.forEach(item => {
-        item.timer = item.order_start_time + 7200000
+        item.timer = item.order_start_time + 7200000 - Date.now()
     });
     order.value = data.data
     console.log('order', order);
@@ -75,8 +79,8 @@ const getOrderList = async (state) => {
 }
 
 //点击跳转到支付详情
-const goDetail = () => {
-
+const goDetail = (item) => {
+    router.push('/detail?oid=' + item.out_trade_no)
 }
 
 </script>
