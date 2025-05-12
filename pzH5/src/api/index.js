@@ -19,5 +19,10 @@ export default {
     //创建订单
     createOrder(data) {
         return http.post('/createOrder', data)
+    },
+
+    //订单列表
+    orderList(params) {
+        return http.get('/order/list', { params })
     }
 }
