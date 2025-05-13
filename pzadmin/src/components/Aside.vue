@@ -1,7 +1,6 @@
 <template>
     <el-menu :collapse="isCollapse" :style="{ width: isCollapse ? '64px' : '230px' }" active-text-color="#ffd04b"
-        background-color="#545c64" class="aside-container" :default-active="active" text-color="#fff" @open="handleOpen"
-        @close="handleClose">
+        background-color="#545c64" class="aside-container" :default-active="active" text-color="#fff" >
         <p class="logo-lg">{{ isCollapse?'DIDI':'DIDI陪诊' }}</p>
         <TreeMenu :menuData :index="1" />
     </el-menu>

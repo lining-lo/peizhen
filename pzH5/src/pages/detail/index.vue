@@ -18,7 +18,7 @@
                     内完成支付，超时订单自动取消
                 </div>
                 <div class="text3">
-                    <van-button type="success" @click="showCode = true">立即支付（0.5元）</van-button>
+                    <van-button type="success" @click="showCode = true">立即支付（0.1元）</van-button>
                 </div>
             </div>
             <!-- 待服务 -->
