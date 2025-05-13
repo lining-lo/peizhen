@@ -69,3 +69,13 @@ export const companionList = (params) => {
 export const deleteCompanion = (data) => {
     return http.post('/delete/companion', data)
 }
+
+//订单列表
+export const adminOrder = (params) => {
+    return http.get('/admin/order', { params })
+}
+
+//服务状态完成
+export const updateOrder = (data) => {
+    return http.post('/update/order', data)
+}

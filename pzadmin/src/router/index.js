@@ -7,7 +7,6 @@ import Login from '../views/Login/index.vue'
 // import Group from '../views/Auth/Group/index.vue'
 // import Staff from '../views/Vppz/Staff/index.vue'
 // import Order from '../views/Vppz/Order/index.vue'
-const localData = localStorage.getItem('pz_v3pz')
 
 const routes = [
     {
@@ -15,6 +14,7 @@ const routes = [
         component: Layout,
         name: 'main',
         redirect: to => {
+            const localData = localStorage.getItem('pz_v3pz')
             if (localData) {
                 const child = JSON.parse(localData).menu.routerList[0].children
                 //第一项有子项
@@ -25,7 +25,7 @@ const routes = [
                     return JSON.parse(localData).menu.routerList[0].meta.path
                 }
             }else{
-                return '/'
+                return '/login'
             }
         },
         children: [
